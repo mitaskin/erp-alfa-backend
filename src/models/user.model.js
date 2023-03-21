@@ -22,6 +22,11 @@ const userShema = new mongoose.Schema({
         type: String,
         require: true,
         trim: true
+    },
+    role: {
+        type: String,
+        require: true,
+        trim: true
     }
 
 }, { collation: "users", timestamps: true })

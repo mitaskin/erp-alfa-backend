@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const dbConnection = () => {
-  mongoose.connect('mongodb://localhost:27017/erp-alfa-db',
+  mongoose.connect(process.env.DB_URL_LIVE,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true

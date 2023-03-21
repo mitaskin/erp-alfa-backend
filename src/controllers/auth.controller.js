@@ -10,7 +10,7 @@ const login = async (req, res) => {
 const register = async (req, res) => {
     console.log(req.body);
 
-    const { name, lastname, email, password } = req.body
+    const { password } = req.body
 
     req.body.password = await bcrypt.hash(password, 10);
 
@@ -27,7 +27,7 @@ const register = async (req, res) => {
             })
 
     } catch (error) {
-        console.log("Kayıt Başarısız.",error);
+        console.log("Kayıt Başarısız.", error);
     }
 }
 
