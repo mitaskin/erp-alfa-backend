@@ -1,5 +1,4 @@
 require("dotenv").config()
-require("./src/data/dbConnection.js")
 
 const express = require('express')
 const dbConnection = require("./src/data/dbConnection.js")

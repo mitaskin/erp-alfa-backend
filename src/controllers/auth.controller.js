@@ -23,13 +23,11 @@ const register = async (req, res) => {
                     success: true,
                     data: response,
                     message: "Kayıt Başarıyla Eklendi"
-                }).catch((err) => {
-                    console.log("Kayıt Başarısız", err);
                 })
             })
 
     } catch (error) {
-        console.log(error);
+        console.log("Kayıt Başarısız.",error);
     }
 }
 
