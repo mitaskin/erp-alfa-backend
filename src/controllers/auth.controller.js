@@ -27,22 +27,31 @@ const register = async (req, res) => {
         .catch((err) => {
             throw new APIError('Kullanıcı Kayıt Edilemedi!', 400)
         })
+
 }
 
 const login = async (req, res) => {
+
     const { email, password } = req.body
 
     const userTemp = await User.findOne({ email })
-    if (!userTemp) throw new APIError("Kullanıcı Bulunamadı!",401)
+    if (!userTemp) throw new APIError("Kullanıcı Bulunamadı!", 401)
 
-    const isPassTrue = await bcrypt.compare(password,userTemp.password)
-    if(!isPassTrue) throw new APIError("Şifre Yanlış",401)
+    const isPassTrue = await bcrypt.compare(password, userTemp.password)
+    if (!isPassTrue) throw new APIError("Şifre Yanlış", 401)
 
     createToken(userTemp, res);
 
 }
 
+const me = async (req, res) => {
+
+    return new Response(req.user).success(res)
+
+}
+
 module.exports = {
     login,
-    register
+    register,
+    me
 }

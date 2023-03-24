@@ -1,18 +1,18 @@
 const APIError = require("../utils/errors")
 
-const errorHandlerMiddleware = (err, req, res, next) => {
-    if (err instanceof APIError) {
-        return res.status(err.statusCode || 400)
+const errorHandlerMiddleware = (error, req, res, next) => {
+    if (error instanceof APIError) {
+        return res.status(error.statusCode || 400)
             .json({
-                success: false,
-                message: err.message
+                status: "error",
+                message: error.message
             })
     }
 
-    console.log(err);
+    console.log(error);
 
     return res.status(500).json({
-        success: false,
+        status: "error",
         message: "Bir hata ile karşılaştık lütfen apinizi kontrol ediniz !"
     })
 }
