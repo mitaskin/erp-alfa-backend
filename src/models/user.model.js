@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const userShema = new mongoose.Schema({
 
@@ -27,9 +27,14 @@ const userShema = new mongoose.Schema({
         type: String,
         require: true,
         trim: true
+    },
+    company: {
+        type: String,
+        require: true,
+        trim: true
     }
 
-}, { collation: "users", timestamps: true })
+}, { collation: { locale: 'en_US', strength: 1 }, timestamps: true })
 
 const user = mongoose.model("users", userShema);
 

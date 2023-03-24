@@ -1,6 +1,6 @@
-const user = require("../models/user.model")
+const User = require("../models/user.model")
 const bcrypt = require("bcrypt");
-const { response } = require("express");
+const APIError = require("../utils/errors");
 
 const login = async (req, res) => {
     console.log(req.body);
@@ -8,28 +8,28 @@ const login = async (req, res) => {
 }
 
 const register = async (req, res) => {
-    console.log(req.body);
+    req.body.password = await bcrypt.hash(req.body.password, 10);
 
-    const { password } = req.body
+        const userCheck = await User.findOne({ email: req.body.email });
+        if (userCheck) {
+            throw new APIError('That user already exisits!',401)
+        } else {
+            // Insert the new user if they do not exist yet
+            userTemp = new User({
+                name: req.body.name,
+                lastname:req.body.lastname,
+                email: req.body.email,
+                password: req.body.password,
+                role: req.body.role,
+                company:req.body.company
+            });
+            await userTemp.save();
+            res.send(userTemp);
+        }
 
-    req.body.password = await bcrypt.hash(password, 10);
 
-    try {
-        const userTemp = new user(req.body)
-
-        await userTemp.save()
-            .then((response) => {
-                return res.status(201).json({
-                    success: true,
-                    data: response,
-                    message: "Kayıt Başarıyla Eklendi"
-                })
-            })
-
-    } catch (error) {
-        console.log("Kayıt Başarısız.", error);
-    }
 }
+
 
 module.exports = {
     login,

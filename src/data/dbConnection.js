@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const dbConnection = () => {
-  mongoose.connect(process.env.DB_URL_LIVE,
+  mongoose.connect(process.env.DB_URL_DEV,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -13,8 +13,6 @@ const dbConnection = () => {
     .catch((err) => {
       console.log("DB Connection Failed!", err);
     })
-
-
 }
 
 module.exports = dbConnection
