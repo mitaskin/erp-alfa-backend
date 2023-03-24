@@ -3,8 +3,8 @@ const { login, register } = require("../controllers/auth.controller")
 const authValidation = require("../middlewares/validations/auth.validation")
 
 
-router.post("/register", authValidation.register,register)
-router.post("/login", login)
+router.post("/register", authValidation.register, register)
+router.post("/login", authValidation.login, login)
 
 
 module.exports = router

@@ -26,9 +26,9 @@ class authValidation {
                     "string.required": "E-posta Adresi Zorunludur",
                     "string.email": "Lütfen E-posta Adresi Giriniz",
                 }),
-                password: joi.string().trim().min(6).max(36).required().messages({
+                password: joi.string().trim().min(5).max(36).required().messages({
                     "string.base": "Şifre Geçersiz",
-                    "string.min": "Şifre 6 karakterden büyük olmalıdır",
+                    "string.min": "Şifre 5 karakterden büyük olmalıdır",
                     "string.max": "Şifre 36 karakterden küçük olmalıdır",
                     "string.empty": "Şifre Boş Bırakılamaz",
                     "string.required": "Şifre Zorunludur"
@@ -49,10 +49,34 @@ class authValidation {
                 })
             }).validateAsync(req.body)
         } catch (error) {
-            throw new APIError(error.details[0].message,401)
+            throw new APIError(error.details[0].message, 401)
         }
         next();
     }
+
+    static login = async (req, res, next) => {
+        try {
+            await joi.object({
+                email: joi.string().trim().email().required().messages({
+                    "string.base": "E-posta Adresi Geçersiz",
+                    "string.required": "E-posta Adresi Zorunludur",
+                    "string.email": "Lütfen E-posta Adresi Giriniz",
+                }),
+                password: joi.string().trim().min(5).max(36).required().messages({
+                    "string.base": "Şifre Geçersiz",
+                    "string.min": "Şifre 5 karakterden büyük olmalıdır",
+                    "string.max": "Şifre 36 karakterden küçük olmalıdır",
+                    "string.empty": "Şifre Boş Bırakılamaz",
+                    "string.required": "Şifre Zorunludur"
+                })
+            }).validateAsync(req.body)
+
+        } catch (error) {
+            throw new APIError(error.details[0].message, 401)
+        }
+        next();
+    }
+
 }
 
 module.exports = authValidation

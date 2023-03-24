@@ -2,16 +2,12 @@ const User = require("../models/user.model")
 const bcrypt = require("bcrypt");
 const APIError = require("../utils/errors");
 const Response = require("../utils/response");
-
-const login = async (req, res) => {
-    console.log(req.body);
-    return res.json(req.body)
-}
+const { createToken } = require("../middlewares/auth");
 
 const register = async (req, res) => {
 
     const userCheck = await User.findOne({ email: req.body.email });
-    if (userCheck) throw new APIError('That user already exisits!', 401)
+    if (userCheck) throw new APIError('Kullanıcı Sisteme Zaten Kayıtlı', 401)
 
     req.body.password = await bcrypt.hash(req.body.password, 10);
 
@@ -31,6 +27,19 @@ const register = async (req, res) => {
         .catch((err) => {
             throw new APIError('Kullanıcı Kayıt Edilemedi!', 400)
         })
+}
+
+const login = async (req, res) => {
+    const { email, password } = req.body
+
+    const userTemp = await User.findOne({ email })
+    if (!userTemp) throw new APIError("Kullanıcı Bulunamadı!",401)
+
+    const isPassTrue = await bcrypt.compare(password,userTemp.password)
+    if(!isPassTrue) throw new APIError("Şifre Yanlış",401)
+
+    createToken(userTemp, res);
+
 }
 
 module.exports = {
