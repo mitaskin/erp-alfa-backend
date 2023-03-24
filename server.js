@@ -7,6 +7,9 @@ const app = express()
 const port = process.env.PORT || 3000
 const router = require("./src/routers")
 const errorHandlerMiddleware = require("./src/middlewares/errorHandler.js")
+const cors = require("cors")
+const corsOptions = require("./src/utils/corsOptions")
+const mongoSanitize = require('express-mongo-sanitize')
 
 //DB Connection
 dbConnection()
@@ -23,12 +26,16 @@ app.get('/', (req, res) => {
   })
 })
 
+//CORS
+app.use(cors(corsOptions))
+
 //Routers
 app.use("/api", router)
 
 //Error Handeler
 app.use(errorHandlerMiddleware)
 
+//Port listening
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`)
 })
