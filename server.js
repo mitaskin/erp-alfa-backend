@@ -10,6 +10,8 @@ const errorHandlerMiddleware = require("./src/middlewares/errorHandler.js")
 const cors = require("cors")
 const corsOptions = require("./src/utils/corsOptions")
 const mongoSanitize = require('express-mongo-sanitize')
+const cookieParser = require('cookie-parser')
+
 
 //DB Connection
 dbConnection()
@@ -18,9 +20,14 @@ dbConnection()
 app.use(express.json())
 app.use(express.json({ limit: "50mb" }))
 app.use(express.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }))
+app.use(cookieParser())
 
 //First Request
 app.get('/', (req, res) => {
+  console.log('Cookies: ', req.cookies)
+  console.log('Signed Cookies: ', req.signedCookies)
+
+
   res.json({
     message: "ERP-ALFA-BACEND is Run"
   })

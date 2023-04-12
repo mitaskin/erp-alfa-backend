@@ -1,13 +1,14 @@
-const whiteList = ["http://localhost:3000"]
+const whiteList = ["http://localhost:3000/*"]
 
 const corsOptions = (req, callback) => {
     let corsOptions;
 
     if (whiteList.indexOf(req.header("Origin")) !== -1) {
-        corsOptions = { origin: true }
+        corsOptions = { changeOrigin: true }
+        console.log("Cors İsteğine izin verildi.");
     }
     else {
-        corsOptions = { origin: false }
+        corsOptions = { changeOrigin: false }
         console.log("Cors İsteği Engelledi.");
     }
 
