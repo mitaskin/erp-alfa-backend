@@ -28,10 +28,11 @@ const createToken = async (user, res) => {
 }
 
 const tokenCheck = async (req, res, next) => {
-    // Bearer Token ile authorization
+    //Bearer Token ile authorization
     // const headerToken = req.headers.authorization && req.headers.authorization.startsWith("Bearer ")
     // if (!headerToken) throw new APIError("Geçersiz Oturum. Lütfen Tekrar Oturum Açın", 401)
     // const token = req.headers.authorization.split(" ")[1]
+
 
     //Çerezler ile authorization
     const token = req.cookies.jwt
@@ -41,6 +42,7 @@ const tokenCheck = async (req, res, next) => {
         const userTemp = await User.findById(decoded.sub).select("_id name lastname email role company")
         if (!userTemp) throw new APIError("Geçersiz Kullanıcı", 401)
         req.user = userTemp
+        console.log(decoded.sub);
         //res.redirect('/')
     })
 
