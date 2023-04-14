@@ -1,7 +1,7 @@
 const router = require("express").Router()
 const { login, register, me } = require("../controllers/auth.controller")
 const { tokenCheck } = require("../middlewares/auth")
-const authValidation = require("../middlewares/validations/auth.validation")
+const authValidation = require("../validators/auth.validation")
 
 
 router.post("/register", authValidation.register, register)
