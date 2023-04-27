@@ -8,7 +8,7 @@ const corsOptions = (req, callback) => {
         console.log("Cors İsteğine izin verildi.");
     }
     else {
-        corsOptions = { changeOrigin: false }
+        corsOptions = { changeOrigin: true }
         console.log("Cors İsteği Engelledi.");
     }
 

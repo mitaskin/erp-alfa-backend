@@ -22,7 +22,7 @@ const createToken = async (user, res) => {
     return res.status(201).json({
         status: "success",
         token: token,
-        message: "Giriş Başarılı Token Oluşturuldu. "
+        message: "Giriş Başarılı Token Oluşturuldu."
     })
 
 }
@@ -35,7 +35,7 @@ const tokenCheck = async (req, res, next) => {
 
 
     //Çerezler ile authorization
-    const token = req.cookies.jwt
+    const token = req.headers.jwt
 
     await jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
         if (err) throw new APIError("Geçersiz Token", 401)

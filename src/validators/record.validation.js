@@ -1,10 +1,10 @@
 const joi = require("joi");
 const APIError = require("../utils/errors");
 
-class authValidation {
+class recordValidation {
     constructor(req, res, next) { }
 
-    static register = async (req, res, next) => {
+    static addrecord = async (req, res, next) => {
         try {
             await joi.object({
                 name: joi.string().trim().min(3).max(100).required().messages({
@@ -54,29 +54,6 @@ class authValidation {
         next();
     }
 
-    static login = async (req, res, next) => {
-        try {
-            await joi.object({
-                email: joi.string().trim().email().required().messages({
-                    "string.base": "E-posta Adresi Geçersiz",
-                    "string.required": "E-posta Adresi Zorunludur",
-                    "string.email": "Lütfen E-posta Adresi Giriniz",
-                }),
-                password: joi.string().trim().min(5).max(36).required().messages({
-                    "string.base": "Şifre Geçersiz",
-                    "string.min": "Şifre 5 karakterden büyük olmalıdır",
-                    "string.max": "Şifre 36 karakterden küçük olmalıdır",
-                    "string.empty": "Şifre Boş Bırakılamaz",
-                    "string.required": "Şifre Zorunludur"
-                })
-            }).validateAsync(req.body)
-
-        } catch (error) {
-            throw new APIError(error.details[0].message, 401)
-        }
-        next();
-    }
-
 }
 
-module.exports = authValidation
+module.exports = recordValidation
