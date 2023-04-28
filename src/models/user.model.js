@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
     address: { type: String, required: true },
     role: {
         type: String,
-        enum: ['superadmin', 'CEO', 'manager', 'account', 'employee', 'user'],
+        enum: ['admin', 'CEO', 'manager', 'account', 'employee', 'user'],
         required: true,
     },
     accessAllowed: {

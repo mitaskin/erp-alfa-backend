@@ -14,7 +14,7 @@ const companySchema = new mongoose.Schema({
     wallets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Wallet' }],
     taxNumber: { type: String, required: true },
     taxOffice: { type: String, required: true },
-    owners: [{ type: String }],
+    owners: [{ type: String, required: true}],
     employees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     transactions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Transaction' }],

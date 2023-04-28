@@ -3,7 +3,25 @@ const User = require('../models/user.model');
 const Wallet = require('../models/wallet.model');
 const Transaction = require('../models/transaction.model');
 
-// Süperadmin için yöntemler
+
+const getCompany = async (req, res) => {
+  try {
+    const companies = await Company.find();
+    res.status(200).json(companies);
+  } catch (error) {
+    res.status(500).json({ message: 'Şirketler yüklenirken hata oluştu' });
+  }
+};
+
+const getCompanyById = async (req, res) => {
+  try {
+    const companies = await Company.find({ companyId: req.params.id });
+    res.status(200).json(companies);
+  } catch (error) {
+    res.status(500).json({ message: 'Şirketler yüklenirken hata oluştu' });
+  }
+};
+
 const createCompany = async (req, res) => {
   try {
     const company = new Company(req.body);
@@ -24,6 +42,10 @@ const createUserForCompany = async (req, res) => {
 
     const user = new User({ ...req.body, company: company._id });
     await user.save();
+    
+    company.users.push(user)
+    await company.save()
+
     res.status(201).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -40,6 +62,10 @@ const createWalletForCompany = async (req, res) => {
 
     const wallet = new Wallet({ ...req.body, company: company._id });
     await wallet.save();
+
+    company.wallets.push(wallet);
+    await company.save()
+Ş
     res.status(201).json(wallet);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -55,7 +81,7 @@ const createOrUpdateTransactionForCompany = async (req, res) => {
     }
 
     const transaction = await Transaction.findOneAndUpdate(
-      { _id: req.body._id, companyFrom: company._id },
+      { _id: req.body._id, company: company._id },
       req.body,
       { new: true, upsert: true }
     );
@@ -67,8 +93,10 @@ const createOrUpdateTransactionForCompany = async (req, res) => {
 };
 
 module.exports = {
-    createCompany,
-    createUserForCompany,
-    createWalletForCompany,
-    createOrUpdateTransactionForCompany,
+  getCompany,
+  getCompanyById,
+  createCompany,
+  createUserForCompany,
+  createWalletForCompany,
+  createOrUpdateTransactionForCompany,
 }
