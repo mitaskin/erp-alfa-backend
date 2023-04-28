@@ -33,7 +33,6 @@ const tokenCheck = async (req, res, next) => {
     // if (!headerToken) throw new APIError("Geçersiz Oturum. Lütfen Tekrar Oturum Açın", 401)
     // const token = req.headers.authorization.split(" ")[1]
 
-
     //Çerezler ile authorization
     const token = req.headers.jwt
 

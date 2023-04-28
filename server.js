@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 
 
 //Routers
-app.use("/api", router)
+app.use("/", router)
 
 //Error Handeler
 app.use(errorHandlerMiddleware)
