@@ -7,17 +7,19 @@ const { createToken } = require("../middlewares/auth");
 const register = async (req, res) => {
 
     const userCheck = await User.findOne({ email: req.body.email });
-    if (userCheck) throw new APIError('Kullanıcı Sisteme Zaten Kayıtlı', 401)
+    if (userCheck) throw new APIError('Kullanıcı Sisteme Zaten Kayıtlı', 409)
 
     req.body.password = await bcrypt.hash(req.body.password, 10);
 
     userTemp = new User({
         name: req.body.name,
-        lastname: req.body.lastname,
+        surname: req.body.surname,
         email: req.body.email,
         password: req.body.password,
         role: req.body.role,
-        company: req.body.company
+        company: req.body.company,
+        address:req.body.address,
+        phone:req.body.phone
     });
 
     await userTemp.save()
@@ -25,7 +27,7 @@ const register = async (req, res) => {
             return new Response(data, "Kayıt Başarıyla Eklendi").created(res);
         })
         .catch((err) => {
-            throw new APIError('Kullanıcı Kayıt Edilemedi!', 400)
+            throw new APIError(err, 400)
         })
 
 }
@@ -35,10 +37,10 @@ const login = async (req, res) => {
     const { email, password } = req.body
 
     const userTemp = await User.findOne({ email })
-    if (!userTemp) throw new APIError("Kullanıcı Bulunamadı!", 401)
+    if (!userTemp) throw new APIError("Kullanıcı Bulunamadı!", 400)
 
     const isPassTrue = await bcrypt.compare(password, userTemp.password)
-    if (!isPassTrue) throw new APIError("Şifre Yanlış", 401)
+    if (!isPassTrue) throw new APIError("Şifre Yanlış", 400)
 
     createToken(userTemp, res);
 

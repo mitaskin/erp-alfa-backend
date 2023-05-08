@@ -8,6 +8,6 @@ const { tokenCheck } = require("../middlewares/auth")
 const authValidation = require("../validators/auth.validation")
 
 // Routes
-router.get("/home", tokenCheck, home)
+router.get("/", tokenCheck, home)
 
 module.exports = router

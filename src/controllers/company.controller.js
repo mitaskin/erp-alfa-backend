@@ -1,10 +1,10 @@
 const Company = require('../models/company.model');
 
 // Tüm şirketleri listele
-const getCompanies = async (req, res) => {
+const getCompany = async (req, res) => {
   try {
-    const companies = await Company.find();
-    res.status(200).json(companies);
+    const company = await Company.find();
+    res.status(200).json(company);
   } catch (error) {
     res.status(500).json({ message: 'Şirketler yüklenirken hata oluştu' });
   }
@@ -42,7 +42,7 @@ const deleteCompany = async (req, res) => {
 };
 
 module.exports = {
-  getCompanies,
+  getCompany,
   addCompany,
   updateCompany,
   deleteCompany,

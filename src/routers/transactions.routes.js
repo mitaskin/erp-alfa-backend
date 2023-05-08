@@ -8,10 +8,10 @@ const { tokenCheck } = require("../middlewares/auth")
 
 
 // Routes
-router.get('/transactions', getTransactions);
-router.get('/transactions/:id', getTransaction);
-router.post('/transactions', createTransaction);
-router.put('/transactions/:id', updateTransaction);
-router.delete('/transactions/:id', deleteTransaction);
+router.get('', getTransactions);
+router.get('/:id', getTransaction);
+router.post('', createTransaction);
+router.put('/:id', updateTransaction);
+router.delete('/:id', deleteTransaction);
 
 module.exports = router

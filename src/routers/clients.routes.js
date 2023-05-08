@@ -7,10 +7,10 @@ const { tokenCheck } = require("../middlewares/auth")
 //Validation
 
 // Routes
-router.get('/clients', getClients);
-router.get('/clients/:id', getClient);
-router.post('/clients', createClient);
-router.put('/clients/:id', updateClient);
-router.delete('/clients/:id', deleteClient);
+router.get('', getClients);
+router.get('/:id', getClient);
+router.post('', createClient);
+router.put('/:id', updateClient);
+router.delete('/:id', deleteClient);
 
 module.exports = router

@@ -11,7 +11,7 @@ const superAdminSchema = new mongoose.Schema({
     surname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     phone: { type: String, required: true },
-    companies: { type: [companySchema] }
+    company: { type: [companySchema] }
 }, { collation: { locale: 'en_US', strength: 1 }, timestamps: true });
 
 const SuperAdmin = mongoose.model('SuperAdmin', superAdminSchema);

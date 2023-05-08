@@ -7,14 +7,12 @@ const users = require("./users.routes")
 const clients = require("./clients.routes")
 const transactions = require("./transactions.routes")
 
-router.use("/api/auth",auth);
-router.use("/api/admin",superadmin)
-router.use("/api/home",home)
-router.use("/api/company",company)
-router.use("/api/users",users)
-router.use("/api/clients",clients)
-router.use("/api/transactions",transactions)
-
-
+router.use("/api/auth", auth);
+router.use("/api/admin", superadmin)
+router.use("/api/home", home)
+router.use("/api/company", company)
+router.use("/api/users", users)
+router.use("/api/clients", clients)
+router.use("/api/transactions", transactions)
 
 module.exports = router

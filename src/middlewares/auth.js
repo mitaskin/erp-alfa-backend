@@ -37,12 +37,14 @@ const tokenCheck = async (req, res, next) => {
     const token = req.headers.jwt
 
     await jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-        if (err) throw new APIError("Geçersiz Token", 401)
+        if (err){
+            throw new APIError("Geçersiz Token", 401);
+        } 
         const userTemp = await User.findById(decoded.sub).select("_id name lastname email role company")
         if (!userTemp) throw new APIError("Geçersiz Kullanıcı", 401)
         req.user = userTemp
         console.log(decoded.sub);
-        //res.redirect('/')
+        
     })
 
     next()
