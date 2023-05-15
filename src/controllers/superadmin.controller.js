@@ -59,13 +59,13 @@ const createUserForCompany = async (req, res) => {
 //Şirket için Cüzdan Oluşturma
 const createWalletForCompany = async (req, res) => {
   try {
-    const company = await Company.findById(req.params.companyId);
+    const company = await Company.findOne({ companyId: req.params.companyId });
     if (!company) {
       res.status(404).json({ error: 'Company not found' });
       return;
     }
 
-    const wallet = new Wallet({ ...req.body, refCompany: company._id });
+    const wallet = new Wallet({ ...req.body, refCompany: company._id, refCompanyId: company.companyId });
     await wallet.save();
 
     company.wallets.push(wallet);
@@ -79,21 +79,30 @@ const createWalletForCompany = async (req, res) => {
 
 //Şirket için yeni transaction oluşturma
 const createOrUpdateTransactionForCompany = async (req, res) => {
-  console.log(req.params);
+
+  console.log(req.body);
   try {
-    const company = await Company.findById(req.params.companyId);
+    const company = await Company.findOne({ companyId: req.params.companyId })
+    .populate('wallets')
+    .populate('users')
+    .populate('clients');
+
     if (!company) {
-      res.status(404).json({ error: 'Company not found' });
+      res.status(404).json({ error: 'Company not found for Main' });
       return;
     }
 
-  const transaction = new Transaction({...req.body, company:req.params.companyId})
+    console.log(company);
+
+
+    const transaction = new Transaction({ ...req.body, companyId: req.params.companyId });
     await transaction.save();
     res.status(200).json(transaction);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Tüm müşterileri listele
 const getClient = async (req, res) => {

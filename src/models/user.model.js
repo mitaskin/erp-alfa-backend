@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     phone: { type: String, required: true },
     address: { type: String},
-    company: { type: String, default:null },
+    company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: false },
     role: {
         type: String,
         enum: ['admin', 'CEO', 'manager', 'account', 'employee', 'user','undefined'],

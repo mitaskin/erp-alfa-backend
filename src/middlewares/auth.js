@@ -37,14 +37,16 @@ const tokenCheck = async (req, res, next) => {
     const token = req.headers.jwt
 
     await jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-        if (err){
+        if (err) {
             throw new APIError("Geçersiz Token", 401);
-        } 
-        const userTemp = await User.findById(decoded.sub).select("_id name lastname email role company")
+        }
+        const userTemp = await User.findById(decoded.sub)
+            .select("userId name lastname email role company")
+            .populate("company", "companyId name")
+
         if (!userTemp) throw new APIError("Geçersiz Kullanıcı", 401)
         req.user = userTemp
-        console.log(decoded.sub);
-        
+
     })
 
     next()

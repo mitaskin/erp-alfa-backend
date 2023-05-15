@@ -20,6 +20,7 @@ const transactionSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     walletTo: { type: mongoose.Schema.Types.ObjectId, ref: 'Wallet', required: false },
     company: { type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: false },
+    companyId: { type: String, required: false },
     client: { type: mongoose.Schema.Types.ObjectId, ref: 'Client', required: false },
 }, { collation: { locale: 'en_US', strength: 1 }, timestamps: true });
 
