@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
   console.log('Signed Cookies: ', req.signedCookies)
 
   res.json({
-    message: "ERP-ALFA-BACEND is Run"
+    message: "ERP-ALFA-BACEND is Run."
   })
 })
 
